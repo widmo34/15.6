@@ -1,22 +1,11 @@
-class Stopwatch extends React.Component{
-        
-    
-        constructor(props) {
-            super(props);
-            this.state = {
-                running: false,
-                display: this.props.display,
-                
-            };
-        }
-   
-
-
-        /*this.running = false;
+// it's a class and his instance 
+class Stopwatch{
+    constructor(display){
+        this.running = false;
         this.display = display;
         this.reset();
-        this.print(this.times); */
-    
+        this.print(this.times);
+    }
 
     reset(){
         this.times = {
@@ -31,7 +20,7 @@ class Stopwatch extends React.Component{
     }
 
     format(times){
-        return `${this.pad0(times.minutes)}:${this.pad0(times.seconds)}:${this.pad0(Math.floor(times.miliseconds))}`
+        return `${pad0(times.minutes)}:${pad0(times.seconds)}:${pad0(Math.floor(times.miliseconds))}`
     }
 
     start(){
@@ -75,23 +64,17 @@ class Stopwatch extends React.Component{
         return result;
     }
 
-    render(){
-        /*return
-        
-        <nav className={'controls'}>
-        <a href='#' className={'button'} id='start' onClik={this.start}>Start</a>
-        <a href='#' className={'button'} id='stop' onClik={this.stop}>Stop</a>
-        </nav>
-        <div className={'stopwatch'}></div>
-        <ul className={'results'}>
-      
-        </ul>*/
-    }
 
 
+}
 
-} // end of constructor 
+const stopwatch = new Stopwatch(
+    document.querySelector('.stopwatch')
+);
 
-const display = document.querySelector('.stopwatch')
-ReactDOM.render(<Stopwatch display={display} />, document.getElementById('app'));
+// these are methods which runs being clicked
+let startButton = document.getElementById('start');
+startButton.addEventListener('click', () => stopwatch.start());
 
+let stopButton = document.getElementById('stop');
+stopButton.addEventListener('click', () => stopwatch.stop())
