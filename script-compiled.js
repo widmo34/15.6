@@ -4,30 +4,16 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Stopwatch = function (_React$Component) {
-    _inherits(Stopwatch, _React$Component);
-
-    function Stopwatch(props) {
+// it's a class and his instance 
+var Stopwatch = function () {
+    function Stopwatch(display) {
         _classCallCheck(this, Stopwatch);
 
-        var _this = _possibleConstructorReturn(this, (Stopwatch.__proto__ || Object.getPrototypeOf(Stopwatch)).call(this, props));
-
-        _this.state = {
-            running: false,
-            display: _this.props.display
-
-        };
-        return _this;
+        this.running = false;
+        this.display = display;
+        this.reset();
+        this.print(this.times);
     }
-
-    /*this.running = false;
-    this.display = display;
-    this.reset();
-    this.print(this.times); */
 
     _createClass(Stopwatch, [{
         key: 'reset',
@@ -46,17 +32,19 @@ var Stopwatch = function (_React$Component) {
     }, {
         key: 'format',
         value: function format(times) {
-            return this.pad0(times.minutes) + ':' + this.pad0(times.seconds) + ':' + this.pad0(Math.floor(times.miliseconds));
+            var self = this;
+
+            return self.pad0(times.minutes) + ':' + self.pad0(times.seconds) + ':' + self.pad0(Math.floor(times.miliseconds));
         }
     }, {
         key: 'start',
         value: function start() {
-            var _this2 = this;
+            var _this = this;
 
             if (!this.running) {
                 this.running = true;
                 this.watch = setInterval(function () {
-                    return _this2.step();
+                    return _this.step();
                 }, 10);
             }
         }
@@ -96,23 +84,20 @@ var Stopwatch = function (_React$Component) {
             }
             return result;
         }
-    }, {
-        key: 'render',
-        value: function render() {
-            /*return
-            
-            <nav className={'controls'}>
-            <a href='#' className={'button'} id='start' onClik={this.start}>Start</a>
-            <a href='#' className={'button'} id='stop' onClik={this.stop}>Stop</a>
-            </nav>
-            <div className={'stopwatch'}></div>
-            <ul className={'results'}>
-                    </ul>*/
-        }
     }]);
 
     return Stopwatch;
-}(React.Component); // end of constructor 
+}();
 
-var display = document.querySelector('.stopwatch');
-ReactDOM.render(React.createElement(Stopwatch, { display: display }), document.getElementById('app'));
+var stopwatch = new Stopwatch(document.querySelector('.stopwatch'));
+
+// these are methods which runs being clicked
+var startButton = document.getElementById('start');
+startButton.addEventListener('click', function () {
+    return stopwatch.start();
+});
+
+var stopButton = document.getElementById('stop');
+stopButton.addEventListener('click', function () {
+    return stopwatch.stop();
+});

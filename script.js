@@ -5,6 +5,7 @@ class Stopwatch{
         this.display = display;
         this.reset();
         this.print(this.times);
+       
     }
 
     reset(){
@@ -20,7 +21,9 @@ class Stopwatch{
     }
 
     format(times){
-        return `${pad0(times.minutes)}:${pad0(times.seconds)}:${pad0(Math.floor(times.miliseconds))}`
+        const self = this;
+
+        return `${self.pad0(times.minutes)}:${self.pad0(times.seconds)}:${self.pad0(Math.floor(times.miliseconds))}`
     }
 
     start(){
